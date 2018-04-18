@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ImageGallery.Api.Services.Repositories;
 using ImageGallery.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,8 @@ namespace ImageGallery.Api
             services.AddDbContextPool<GalleryContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("defaultConnection"), 
                 b => b.MigrationsAssembly("ImageGallery.Data")));
+
+            services.AddScoped<IGalleryRepository, GalleryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
