@@ -2,7 +2,7 @@
 
 namespace ImageGallery.DTO
 {
-    public class Class1
+    public class ImageDto
     {
     }
 }
