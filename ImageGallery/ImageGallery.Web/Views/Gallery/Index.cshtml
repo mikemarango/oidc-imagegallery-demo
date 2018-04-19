@@ -1,0 +1,23 @@
+﻿@model IndexImageViewModel
+@{
+    ViewData["Title"] = "Image List";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="container-fluid">
+    @foreach (var image in Model.Images)
+    {
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img style="width:100%" src="@("https://localhost:44331/images/" + image.FileName)" />
+                <div class="caption">
+                    <div class="h5">@image.Title</div>
+                    <a asp-action="Edit" asp-controller="Gallery" asp-route-id="@image.Id">Edit Title</a> |
+                    <a asp-action="Delte" asp-controller="Gallery" asp-route-id="@image.Id">Delete Image</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using ImageGallery.Api.Services.Repositories;
 using ImageGallery.Data;
+using ImageGallery.DTO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +37,11 @@ namespace ImageGallery.Api
                 b => b.MigrationsAssembly("ImageGallery.Data")));
 
             services.AddScoped<IGalleryRepository, GalleryRepository>();
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status301MovedPermanently;
+                options.HttpsPort = 5001;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,8 +55,14 @@ namespace ImageGallery.Api
             {
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<Image, ImageDto>();
+                config.CreateMap<ImageCreatorDto, Image>();
+                config.CreateMap<ImageUpdaterDto, Image>();
+            });
             app.UseMvc();
         }
     }
