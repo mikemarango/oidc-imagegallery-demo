@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using ImageGallery.Data;
 using ImageGallery.DTO;
 using ImageGallery.Web.Models;
 using ImageGallery.Web.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace ImageGallery.Web.Controllers
 {
+    [Authorize]
     public class GalleryController : Controller
     {
 
@@ -24,6 +29,8 @@ namespace ImageGallery.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            await WriteOutIdentityInformation();
+
             var images = await Service.GetImagesAsync();
             var indexImageViewModel = new IndexImageViewModel()
             {
@@ -65,7 +72,6 @@ namespace ImageGallery.Web.Controllers
 
             return View(editImageViewModel);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditImageViewModel editImageViewModel)
@@ -79,5 +85,22 @@ namespace ImageGallery.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task Logout()
+        {
+            await HttpContext.SignOutAsync("Cookies");
+            await HttpContext.SignOutAsync("oidc");
+        }
+
+        public async Task WriteOutIdentityInformation()
+        {
+            var identityToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.IdToken);
+            Debug.WriteLine($"IdentityToken: {identityToken}");
+            foreach (var claim in User.Claims)
+            {
+                Debug.WriteLine($"Claim type: {claim.Type}, claim value: {claim.Value}");
+            }
+        }
+
     }
 }

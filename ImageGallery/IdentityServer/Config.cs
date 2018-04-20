@@ -45,17 +45,18 @@ namespace IdentityServer
                 // MVC client using hybrid flow
                 new Client
                 {
-                    ClientId = "mvc",
-                    ClientName = "MVC Client",
+                    ClientId = "imagegallery.web",
+                    ClientName = "Image Gallery",
 
-                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+                    AllowedGrantTypes = GrantTypes.Hybrid,
                     ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
 
-                    RedirectUris = { "http://localhost:5001/signin-oidc" },
-                    FrontChannelLogoutUri = "http://localhost:5001/signout-oidc",
-                    PostLogoutRedirectUris = { "http://localhost:5001/signout-callback-oidc" },
+                    RedirectUris = { "https://localhost:44370/signin-oidc" },
+                    FrontChannelLogoutUri = "https://localhost:44370/signout-oidc",
+                    PostLogoutRedirectUris = { "https://localhost:44370/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
+                    //AlwaysIncludeUserClaimsInIdToken = true,
                     AllowedScopes = { "openid", "profile", "api1" }
                 },
 

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Security.Cryptography.X509Certificates;
 
 namespace IdentityServer
 {
@@ -37,18 +37,20 @@ namespace IdentityServer
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
+
             })
-                .AddTestUsers(TestUsers.Users);
+            .AddSigningCredential(LoadCertificateFromStore(Configuration.GetConnectionString("SigningCredentialCertificateThumbPrint")))
+            .AddTestUsers(TestUsers.Users);
 
             // in-memory, code config
-            //builder.AddInMemoryIdentityResources(Config.GetIdentityResources());
-            //builder.AddInMemoryApiResources(Config.GetApis());
-            //builder.AddInMemoryClients(Config.GetClients());
+            builder.AddInMemoryIdentityResources(Config.GetIdentityResources());
+            builder.AddInMemoryApiResources(Config.GetApis());
+            builder.AddInMemoryClients(Config.GetClients());
 
             // in-memory, json config
-            builder.AddInMemoryIdentityResources(Configuration.GetSection("IdentityResources"));
-            builder.AddInMemoryApiResources(Configuration.GetSection("ApiResources"));
-            builder.AddInMemoryClients(Configuration.GetSection("clients"));
+            //builder.AddInMemoryIdentityResources(Configuration.GetSection("IdentityResources"));
+            //builder.AddInMemoryApiResources(Configuration.GetSection("ApiResources"));
+            //builder.AddInMemoryClients(Configuration.GetSection("clients"));
 
 
             services.AddAuthentication()
@@ -59,7 +61,24 @@ namespace IdentityServer
                     options.ClientId = "708996912208-9m4dkjb5hscn7cjrn5u0r4tbgkbj1fko.apps.googleusercontent.com";
                     options.ClientSecret = "wdfPY6t8H8cecgjlxud__4Gh";
                 });
+
         }
+
+        public X509Certificate2 LoadCertificateFromStore(string thumbPrint)
+        {
+            using (var store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
+            {
+                store.Open(OpenFlags.ReadOnly);
+                var certCollection = store.Certificates.Find(X509FindType.FindByThumbprint,
+                    thumbPrint, true);
+                if (certCollection.Count == 0)
+                {
+                    throw new Exception("The specified certificate wasn't found. Check the specified thumbprint.");
+                }
+                return certCollection[0];
+            }
+        }
+
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
