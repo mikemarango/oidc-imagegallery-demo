@@ -1,0 +1,99 @@
+2018-04-20 03:40:08.604 -07:00 [INF] You are using the in-memory version of the persisted grant store. This will store consent decisions, authorization codes, refresh and reference tokens in memory only. If you are using any of those features in production, you want to switch to a different store implementation.
+2018-04-20 03:40:08.671 -07:00 [DBG] Using idsrv as default scheme for authentication
+2018-04-20 03:40:08.674 -07:00 [DBG] Using idsrv as default scheme for sign-in
+2018-04-20 03:40:08.675 -07:00 [DBG] Using idsrv as default scheme for sign-out
+2018-04-20 03:40:08.675 -07:00 [DBG] Using idsrv as default scheme for challenge
+2018-04-20 03:40:08.676 -07:00 [DBG] Using idsrv as default scheme for forbid
+2018-04-20 03:40:20.821 -07:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2018-04-20 03:40:20.832 -07:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2018-04-20 03:40:20.832 -07:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2018-04-20 03:40:20.836 -07:00 [DBG] Start discovery request
+2018-04-20 03:52:44.378 -07:00 [INF] You are using the in-memory version of the persisted grant store. This will store consent decisions, authorization codes, refresh and reference tokens in memory only. If you are using any of those features in production, you want to switch to a different store implementation.
+2018-04-20 03:52:44.421 -07:00 [DBG] Using idsrv as default scheme for authentication
+2018-04-20 03:52:44.425 -07:00 [DBG] Using idsrv as default scheme for sign-in
+2018-04-20 03:52:44.425 -07:00 [DBG] Using idsrv as default scheme for sign-out
+2018-04-20 03:52:44.426 -07:00 [DBG] Using idsrv as default scheme for challenge
+2018-04-20 03:52:44.426 -07:00 [DBG] Using idsrv as default scheme for forbid
+2018-04-20 03:55:13.632 -07:00 [INF] You are using the in-memory version of the persisted grant store. This will store consent decisions, authorization codes, refresh and reference tokens in memory only. If you are using any of those features in production, you want to switch to a different store implementation.
+2018-04-20 03:55:13.668 -07:00 [DBG] Using idsrv as default scheme for authentication
+2018-04-20 03:55:13.671 -07:00 [DBG] Using idsrv as default scheme for sign-in
+2018-04-20 03:55:13.671 -07:00 [DBG] Using idsrv as default scheme for sign-out
+2018-04-20 03:55:13.671 -07:00 [DBG] Using idsrv as default scheme for challenge
+2018-04-20 03:55:13.671 -07:00 [DBG] Using idsrv as default scheme for forbid
+2018-04-20 04:01:11.640 -07:00 [INF] You are using the in-memory version of the persisted grant store. This will store consent decisions, authorization codes, refresh and reference tokens in memory only. If you are using any of those features in production, you want to switch to a different store implementation.
+2018-04-20 04:01:11.691 -07:00 [DBG] Using idsrv as default scheme for authentication
+2018-04-20 04:01:11.696 -07:00 [DBG] Using idsrv as default scheme for sign-in
+2018-04-20 04:01:11.696 -07:00 [DBG] Using idsrv as default scheme for sign-out
+2018-04-20 04:01:11.697 -07:00 [DBG] Using idsrv as default scheme for challenge
+2018-04-20 04:01:11.697 -07:00 [DBG] Using idsrv as default scheme for forbid
+2018-04-20 04:03:18.713 -07:00 [INF] You are using the in-memory version of the persisted grant store. This will store consent decisions, authorization codes, refresh and reference tokens in memory only. If you are using any of those features in production, you want to switch to a different store implementation.
+2018-04-20 04:03:18.757 -07:00 [DBG] Using idsrv as default scheme for authentication
+2018-04-20 04:03:18.761 -07:00 [DBG] Using idsrv as default scheme for sign-in
+2018-04-20 04:03:18.761 -07:00 [DBG] Using idsrv as default scheme for sign-out
+2018-04-20 04:03:18.761 -07:00 [DBG] Using idsrv as default scheme for challenge
+2018-04-20 04:03:18.762 -07:00 [DBG] Using idsrv as default scheme for forbid
+2018-04-20 04:03:50.977 -07:00 [DBG] Request path /.well-known/openid-configuration matched to endpoint type Discovery
+2018-04-20 04:03:50.984 -07:00 [DBG] Endpoint enabled: Discovery, successfully created handler: IdentityServer4.Endpoints.DiscoveryEndpoint
+2018-04-20 04:03:50.984 -07:00 [INF] Invoking IdentityServer endpoint: IdentityServer4.Endpoints.DiscoveryEndpoint for /.well-known/openid-configuration
+2018-04-20 04:03:50.990 -07:00 [DBG] Start discovery request
+2018-04-20 04:04:58.319 -07:00 [INF] You are using the in-memory version of the persisted grant store. This will store consent decisions, authorization codes, refresh and reference tokens in memory only. If you are using any of those features in production, you want to switch to a different store implementation.
+2018-04-20 04:04:58.356 -07:00 [DBG] Using idsrv as default scheme for authentication
+2018-04-20 04:04:58.360 -07:00 [DBG] Using idsrv as default scheme for sign-in
+2018-04-20 04:04:58.361 -07:00 [DBG] Using idsrv as default scheme for sign-out
+2018-04-20 04:04:58.361 -07:00 [DBG] Using idsrv as default scheme for challenge
+2018-04-20 04:04:58.361 -07:00 [DBG] Using idsrv as default scheme for forbid
+2018-04-20 04:05:30.895 -07:00 [INF] You are using the in-memory version of the persisted grant store. This will store consent decisions, authorization codes, refresh and reference tokens in memory only. If you are using any of those features in production, you want to switch to a different store implementation.
+2018-04-20 04:05:30.965 -07:00 [DBG] Using idsrv as default scheme for authentication
+2018-04-20 04:05:30.971 -07:00 [DBG] Using idsrv as default scheme for sign-in
+2018-04-20 04:05:30.971 -07:00 [DBG] Using idsrv as default scheme for sign-out
+2018-04-20 04:05:30.971 -07:00 [DBG] Using idsrv as default scheme for challenge
+2018-04-20 04:05:30.971 -07:00 [DBG] Using idsrv as default scheme for forbid
+2018-04-20 04:18:29.604 -07:00 [INF] You are using the in-memory version of the persisted grant store. This will store consent decisions, authorization codes, refresh and reference tokens in memory only. If you are using any of those features in production, you want to switch to a different store implementation.
+2018-04-20 04:18:29.642 -07:00 [DBG] Using idsrv as default scheme for authentication
+2018-04-20 04:18:29.646 -07:00 [DBG] Using idsrv as default scheme for sign-in
+2018-04-20 04:18:29.646 -07:00 [DBG] Using idsrv as default scheme for sign-out
+2018-04-20 04:18:29.646 -07:00 [DBG] Using idsrv as default scheme for challenge
+2018-04-20 04:18:29.646 -07:00 [DBG] Using idsrv as default scheme for forbid
+2018-04-20 04:18:35.757 -07:00 [INF] AuthenticationScheme: idsrv was challenged.
+2018-04-20 04:20:21.700 -07:00 [INF] You are using the in-memory version of the persisted grant store. This will store consent decisions, authorization codes, refresh and reference tokens in memory only. If you are using any of those features in production, you want to switch to a different store implementation.
+2018-04-20 04:20:21.746 -07:00 [DBG] Using idsrv as default scheme for authentication
+2018-04-20 04:20:21.749 -07:00 [DBG] Using idsrv as default scheme for sign-in
+2018-04-20 04:20:21.749 -07:00 [DBG] Using idsrv as default scheme for sign-out
+2018-04-20 04:20:21.749 -07:00 [DBG] Using idsrv as default scheme for challenge
+2018-04-20 04:20:21.750 -07:00 [DBG] Using idsrv as default scheme for forbid
+2018-04-20 04:20:26.541 -07:00 [INF] AuthenticationScheme: idsrv was challenged.
+2018-04-20 04:21:03.199 -07:00 [DBG] CORS request made for path: /account/login from origin: null but was ignored because path was not for an allowed IdentityServer CORS endpoint
+2018-04-20 04:21:03.379 -07:00 [INF] {
+  "Name": "User Login Success",
+  "Category": "Authentication",
+  "EventType": "Success",
+  "Id": 1000,
+  "Username": "alice",
+  "SubjectId": "818727",
+  "DisplayName": "alice",
+  "Endpoint": "UI",
+  "ActivityId": "0HLD6M2QC17S3:00000002",
+  "TimeStamp": "2018-04-20T11:21:03Z",
+  "ProcessId": 11908,
+  "LocalIpAddress": "127.0.0.1:9151",
+  "RemoteIpAddress": "::1"
+}
+2018-04-20 04:21:03.396 -07:00 [DBG] Augmenting SignInContext
+2018-04-20 04:21:03.398 -07:00 [DBG] Adding idp claim with value: local
+2018-04-20 04:21:03.398 -07:00 [DBG] Adding amr claim with value: pwd
+2018-04-20 04:21:03.437 -07:00 [INF] AuthenticationScheme: idsrv signed in.
+2018-04-20 04:21:22.134 -07:00 [DBG] CORS request made for path: /Account/Logout from origin: null but was ignored because path was not for an allowed IdentityServer CORS endpoint
+2018-04-20 04:21:22.159 -07:00 [INF] AuthenticationScheme: idsrv signed out.
+2018-04-20 04:21:22.165 -07:00 [INF] {
+  "Name": "User Logout Success",
+  "Category": "Authentication",
+  "EventType": "Success",
+  "Id": 1002,
+  "SubjectId": "818727",
+  "DisplayName": "alice",
+  "ActivityId": "0HLD6M2QC17S0:00000003",
+  "TimeStamp": "2018-04-20T11:21:22Z",
+  "ProcessId": 11908,
+  "LocalIpAddress": "127.0.0.1:9151",
+  "RemoteIpAddress": "::1"
+}

@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageGallery.DTO", "ImageGa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageGallery.Web", "ImageGallery.Web\ImageGallery.Web.csproj", "{C297B7E8-52E9-42BC-BA96-33B0F5E482BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGallery.API", "ImageGallery.API\ImageGallery.API.csproj", "{AC7F855A-B0E3-4691-B4AD-ABB361650701}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageGallery.API", "ImageGallery.API\ImageGallery.API.csproj", "{AC7F855A-B0E3-4691-B4AD-ABB361650701}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{D2989DC4-B759-4687-8970-A2DB33B7B26B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{AC7F855A-B0E3-4691-B4AD-ABB361650701}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC7F855A-B0E3-4691-B4AD-ABB361650701}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC7F855A-B0E3-4691-B4AD-ABB361650701}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2989DC4-B759-4687-8970-A2DB33B7B26B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2989DC4-B759-4687-8970-A2DB33B7B26B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2989DC4-B759-4687-8970-A2DB33B7B26B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2989DC4-B759-4687-8970-A2DB33B7B26B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
