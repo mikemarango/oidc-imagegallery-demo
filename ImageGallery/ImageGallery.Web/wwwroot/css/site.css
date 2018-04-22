@@ -28,31 +28,6 @@ body {
     margin: 15px;
 }
 
-.default-button {
-    width: 100px;
-    height: 50px;
-}
-
-.bottom-margin-default {
-    margin-bottom: 30px;
-}
-
-.bottom-margin-small {
-    margin-bottom: 15px
-}
-
-.right-margin-default {
-    margin-right: 30px;
-}
-
-.left-margin-default {
-    margin-left: 30px;
-}
-
-.left-margin-smaller {
-    margin-left: 15px
-}
-
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

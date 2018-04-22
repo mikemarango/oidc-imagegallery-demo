@@ -43,7 +43,7 @@ namespace ImageGallery.Web
             })
             .AddCookie("Cookies", options =>
             {
-                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.AccessDeniedPath = "/Authorization/AccessDenied";
             })
             .AddOpenIdConnect("oidc", options =>
             {
@@ -54,44 +54,36 @@ namespace ImageGallery.Web
                 options.ClientSecret = "49C1A7E1-0C79-4A89-A3D6-A37998FB86B0";
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
-                options.Scope.Add("address");
-                options.Scope.Add("roles");
                 options.ResponseType = "code id_token";
                 options.SaveTokens = true;
                 options.GetClaimsFromUserInfoEndpoint = true;
-                options.Events = new OpenIdConnectEvents()
-                {
-                    OnTicketReceived = ticketReceivedContext =>
-                    {
-                        return Task.CompletedTask;
-                    },
+                //options.Events = new OpenIdConnectEvents()
+                //{
+                //    OnTicketReceived = ticketReceivedContext =>
+                //    {
+                //        return Task.CompletedTask;
+                //    },
 
-                    OnTokenValidated = tokenValidatedContext =>
-                    {
-                        var identity = tokenValidatedContext.Principal.Identity
-                            as ClaimsIdentity;
+                //    OnTokenValidated = tokenValidatedContext =>
+                //    {
+                //        var identity = tokenValidatedContext.Principal.Identity
+                //            as ClaimsIdentity;
 
-                        var targetClaims = identity.Claims.Where(z => new[] { "subscriptionlevel", "country", "role", "sub" }.Contains(z.Type));
+                //        var targetClaims = identity.Claims.Where(z => new[] { "subscriptionlevel", "country", "role", "sub" }.Contains(z.Type));
 
-                        var newClaimsIdentity = new ClaimsIdentity(
-                          targetClaims,
-                          identity.AuthenticationType,
-                          "given_name",
-                          "role");
+                //        var newClaimsIdentity = new ClaimsIdentity(
+                //          targetClaims,
+                //          identity.AuthenticationType,
+                //          "given_name",
+                //          "role");
 
-                        tokenValidatedContext.Principal =
-                            new ClaimsPrincipal(newClaimsIdentity);
+                //        tokenValidatedContext.Principal =
+                //            new ClaimsPrincipal(newClaimsIdentity);
 
-                        return Task.CompletedTask;
-                    },
+                //        return Task.CompletedTask;
+                //    }
 
-                    OnUserInformationReceived = userInformationReceivedContext =>
-                    {
-                        userInformationReceivedContext.User.Remove("address");
-                        return Task.FromResult(0);
-                    }
-
-                };
+                //};
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -99,15 +91,8 @@ namespace ImageGallery.Web
             services.AddHttpClient("images", httpClient =>
             {
                 httpClient.BaseAddress = new Uri(Configuration.GetConnectionString("imageApiUri"));
+
             }).AddTypedClient<ImageService>();
-
-            services.AddHttpClient("discovery", httpClient =>
-            {
-                httpClient.BaseAddress = new Uri(Configuration.GetConnectionString("identityServerUri"));
-            }).AddTypedClient<HttpService>();
-
-            services.AddHttpContextAccessor();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -122,9 +107,8 @@ namespace ImageGallery.Web
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            JwtSecurityTokenHandler.DefaultInboundClaimFilter.Clear();
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            //JwtSecurityTokenHandler.DefaultInboundClaimFilter.Clear();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
