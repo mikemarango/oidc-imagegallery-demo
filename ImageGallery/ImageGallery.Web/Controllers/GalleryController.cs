@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityModel.Client;
 using ImageGallery.Data;
 using ImageGallery.DTO;
 using ImageGallery.Web.Models;
@@ -19,19 +20,21 @@ namespace ImageGallery.Web.Controllers
     public class GalleryController : Controller
     {
 
-        public GalleryController(ImageService service)
+        public GalleryController(ImageService imageService, HttpService httpService)
         {
-            Service = service;
+            ImageService = imageService;
+            HttpService = httpService;
         }
 
-        public ImageService Service { get; }
+        public ImageService ImageService { get; }
+        public HttpService HttpService { get; }
         public IConfiguration Configuration { get; }
 
         public async Task<IActionResult> Index()
         {
             await WriteOutIdentityInformation();
 
-            var images = await Service.GetImagesAsync();
+            var images = await ImageService.GetImagesAsync();
             var indexImageViewModel = new IndexImageViewModel()
             {
                 Images = images
@@ -55,14 +58,14 @@ namespace ImageGallery.Web.Controllers
                 Title = editImageViewModel.Title
             };
 
-            await Service.AddImageAsync(image);
+            await ImageService.AddImageAsync(image);
 
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var image = await Service.GetImageAsync(id);
+            var image = await ImageService.GetImageAsync(id);
 
             var editImageViewModel = new EditImageViewModel()
             {
@@ -79,9 +82,9 @@ namespace ImageGallery.Web.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            var image = await Service.GetImageAsync(editImageViewModel.Id);
+            var image = await ImageService.GetImageAsync(editImageViewModel.Id);
 
-            await Service.UpdateImageAsync(image.Id, image);
+            await ImageService.UpdateImageAsync(image.Id, image);
 
             return RedirectToAction(nameof(Index));
         }
@@ -100,6 +103,24 @@ namespace ImageGallery.Web.Controllers
             {
                 Debug.WriteLine($"Claim type: {claim.Type}, claim value: {claim.Value}");
             }
+        }
+
+        [Authorize(Roles = "PayingUser")]
+        public async Task<IActionResult> Order()
+        {
+            //await HttpService.GetClient();
+            var discoveryClient = new DiscoveryClient("https://localhost:44361/");
+            var metaDataResponse = await discoveryClient.GetAsync();
+            var userInfoClient = new UserInfoClient(metaDataResponse.UserInfoEndpoint);
+            var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+            var response = await userInfoClient.GetAsync(accessToken);
+            if (response.IsError)
+            {
+                throw new Exception("Problem accessing UserInfo endpoint");
+            }
+
+            var address = response.Claims.FirstOrDefault(c => c.Type == "address")?.Value;
+            return View(new OrderViewModel(address));
         }
 
     }
