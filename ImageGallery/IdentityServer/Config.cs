@@ -15,6 +15,8 @@ namespace IdentityServer
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResources.Address(),
+                new IdentityResource("roles", "Your role(s)", new[] { "role" })
             };
         }
 
@@ -56,8 +58,8 @@ namespace IdentityServer
                     PostLogoutRedirectUris = { "https://localhost:44370/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
-                    //AlwaysIncludeUserClaimsInIdToken = true,
-                    AllowedScopes = { "openid", "profile", "api1" }
+                    AllowedScopes = { "openid", "profile", "address", "roles", "api1" },
+                    AlwaysIncludeUserClaimsInIdToken = true,
                 },
 
                 // SPA client using implicit flow
