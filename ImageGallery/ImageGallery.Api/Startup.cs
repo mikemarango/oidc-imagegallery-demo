@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using IdentityServer4.AccessTokenValidation;
 using ImageGallery.Api.Services.Repositories;
 using ImageGallery.Data;
 using ImageGallery.DTO;
@@ -42,6 +43,16 @@ namespace ImageGallery.Api
                 options.RedirectStatusCode = StatusCodes.Status301MovedPermanently;
                 options.HttpsPort = 5001;
             });
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "https://localhost:44361/";
+                    options.RequireHttpsMetadata = true;
+                    options.ApiName = "imagegallery.api";
+                    options.ApiSecret = "dcf84a90-98cf-48ec-af8b-50cb1f42d51b";
+                });
+
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +74,7 @@ namespace ImageGallery.Api
                 config.CreateMap<ImageCreatorDto, Image>();
                 config.CreateMap<ImageUpdaterDto, Image>();
             });
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

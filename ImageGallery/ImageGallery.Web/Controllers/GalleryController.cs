@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 using ImageGallery.Data;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Newtonsoft.Json;
 
 namespace ImageGallery.Web.Controllers
 {
@@ -20,9 +23,8 @@ namespace ImageGallery.Web.Controllers
     public class GalleryController : Controller
     {
 
-        public GalleryController(ImageService imageService, HttpService httpService)
+        public GalleryController(HttpService httpService)
         {
-            ImageService = imageService;
             HttpService = httpService;
         }
 
@@ -34,13 +36,42 @@ namespace ImageGallery.Web.Controllers
         {
             await WriteOutIdentityInformation();
 
-            var images = await ImageService.GetImagesAsync();
-            var indexImageViewModel = new IndexImageViewModel()
+            var httpClient = await HttpService.GetClient();
+            var response = await httpClient.GetAsync("api/image");
+            //response.EnsureSuccessStatusCode();
+            return await HandleApiResponseAsync(response, async () =>
             {
-                Images = images
-            };
+                var images = await response.Content.ReadAsStringAsync();
+                var indexImageViewModel = new IndexImageViewModel()
+                {
+                    Images = JsonConvert.DeserializeObject<IList<Image>>(images).ToList()
+                };
+                return View(indexImageViewModel);
+            });
 
-            return View(indexImageViewModel);
+            //var images = await response.Content.ReadAsStringAsync();
+            //var indexImageViewModel = new IndexImageViewModel()
+            //{
+            //    Images = JsonConvert.DeserializeObject<IList<Image>>(images).ToList()
+            //};
+            //return View(indexImageViewModel);
+
+        }
+
+        private async Task<IActionResult> HandleApiResponseAsync(HttpResponseMessage response, Func<Task<ViewResult>> onSuccess)
+        {
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                    {
+                        return await onSuccess();
+                    }
+                case HttpStatusCode.Unauthorized:
+                case HttpStatusCode.Forbidden:
+                    return RedirectToAction("AccessDenied", "Account");
+                default:
+                    throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
+            }
         }
 
         public async Task<IActionResult> Create()

@@ -56,6 +56,7 @@ namespace ImageGallery.Web
                 options.Scope.Add("profile");
                 options.Scope.Add("address");
                 options.Scope.Add("roles");
+                options.Scope.Add("imagegallery.api");
                 options.ResponseType = "code id_token";
                 options.SaveTokens = true;
                 options.GetClaimsFromUserInfoEndpoint = true;
@@ -96,17 +97,8 @@ namespace ImageGallery.Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddHttpClient("images", httpClient =>
-            {
-                httpClient.BaseAddress = new Uri(Configuration.GetConnectionString("imageApiUri"));
-            }).AddTypedClient<ImageService>();
-
-            services.AddHttpClient("discovery", httpClient =>
-            {
-                httpClient.BaseAddress = new Uri(Configuration.GetConnectionString("identityServerUri"));
-            }).AddTypedClient<HttpService>();
-
             services.AddHttpContextAccessor();
+            services.AddHttpClient<HttpService>(client => client.BaseAddress = new Uri(Configuration.GetConnectionString("imageApiUri")));
 
         }
 

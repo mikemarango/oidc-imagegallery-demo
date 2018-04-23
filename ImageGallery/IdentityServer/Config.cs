@@ -16,7 +16,7 @@ namespace IdentityServer
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResources.Address(),
-                new IdentityResource("roles", "Your role(s)", new[] { "role" })
+                new IdentityResource("roles", "Your role(s)", new[] { "role" }),
             };
         }
 
@@ -24,7 +24,10 @@ namespace IdentityServer
         {
             return new ApiResource[]
             {
-                new ApiResource("api1", "My API #1")
+                new ApiResource("imagegallery.api", "Image Gallery API", new[] { "role" })
+                {
+                    ApiSecrets = new[] { new Secret("dcf84a90-98cf-48ec-af8b-50cb1f42d51b".Sha256()) }
+                }
             };
         }
 
@@ -58,7 +61,7 @@ namespace IdentityServer
                     PostLogoutRedirectUris = { "https://localhost:44370/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile", "address", "roles", "api1" },
+                    AllowedScopes = { "openid", "profile", "address", "roles", "imagegallery.api" },
                     AlwaysIncludeUserClaimsInIdToken = true,
                 },
 
