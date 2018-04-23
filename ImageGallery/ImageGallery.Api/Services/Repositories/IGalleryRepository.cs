@@ -10,7 +10,7 @@ namespace ImageGallery.Api.Services.Repositories
         Task AddImageAsync(Image image);
         Task DeleteImage(Image image);
         Task<Image> GetImageAsync(Guid id);
-        Task<List<Image>> GetImagesAsync();
+        Task<List<Image>> GetImagesAsync(string ownerId);
         Task UpdateImageAsync(Image image);
     }
 }

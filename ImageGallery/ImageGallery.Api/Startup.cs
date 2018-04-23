@@ -41,7 +41,7 @@ namespace ImageGallery.Api
             services.AddHttpsRedirection(options =>
             {
                 options.RedirectStatusCode = StatusCodes.Status301MovedPermanently;
-                options.HttpsPort = 5001;
+                options.HttpsPort = 44331;
             });
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>

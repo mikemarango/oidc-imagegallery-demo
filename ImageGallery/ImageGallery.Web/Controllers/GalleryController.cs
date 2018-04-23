@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace ImageGallery.Web.Controllers
 {
@@ -48,17 +49,9 @@ namespace ImageGallery.Web.Controllers
                 };
                 return View(indexImageViewModel);
             });
-
-            //var images = await response.Content.ReadAsStringAsync();
-            //var indexImageViewModel = new IndexImageViewModel()
-            //{
-            //    Images = JsonConvert.DeserializeObject<IList<Image>>(images).ToList()
-            //};
-            //return View(indexImageViewModel);
-
         }
 
-        private async Task<IActionResult> HandleApiResponseAsync(HttpResponseMessage response, Func<Task<ViewResult>> onSuccess)
+        private async Task<IActionResult> HandleApiResponseAsync(HttpResponseMessage response, Func<Task<IActionResult>> onSuccess)
         {
             switch (response.StatusCode)
             {
@@ -72,6 +65,25 @@ namespace ImageGallery.Web.Controllers
                 default:
                     throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
             }
+        }
+
+        private IActionResult HandleApiResponse(HttpResponseMessage response, Func<IActionResult> onSuccess)
+        {
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                case HttpStatusCode.NoContent:
+                case HttpStatusCode.Created:
+                    {
+                        return onSuccess();
+                    }
+                case HttpStatusCode.Unauthorized:
+                case HttpStatusCode.Forbidden:
+                    return RedirectToAction("AccessDenied", "Account");
+                default:
+                    throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
+            }
+
         }
 
         public async Task<IActionResult> Create()
@@ -96,15 +108,28 @@ namespace ImageGallery.Web.Controllers
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var image = await ImageService.GetImageAsync(id);
-
-            var editImageViewModel = new EditImageViewModel()
+            var httpClient = await HttpService.GetClient();
+            var response = await httpClient.GetAsync($"api/image/{id}");
+            return await HandleApiResponseAsync(response, async () =>
             {
-                Id = image.Id,
-                Title = image.Title
-            };
+                var imageAsString = await response.Content.ReadAsStringAsync();
+                var deserializeImage = JsonConvert.DeserializeObject<Image>(imageAsString);
+                var editImageViewModel = new EditImageViewModel()
+                {
+                    Id = deserializeImage.Id,
+                    Title = deserializeImage.Title
+                };
 
-            return View(editImageViewModel);
+                return View(editImageViewModel);
+            });
+
+            //var editImageViewModel = new EditImageViewModel()
+            //{
+            //    Id = image.Id,
+            //    Title = image.Title
+            //};
+
+            //return View(editImageViewModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -113,11 +138,19 @@ namespace ImageGallery.Web.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            var image = await ImageService.GetImageAsync(editImageViewModel.Id);
+            var imageUpdaterDto = new ImageUpdaterDto()
+            {
+                Title = editImageViewModel.Title
+            };
 
-            await ImageService.UpdateImageAsync(image.Id, image);
+            var serializedImageUpdateDto = JsonConvert.SerializeObject(imageUpdaterDto);
 
-            return RedirectToAction(nameof(Index));
+            var httpService = await HttpService.GetClient();
+
+            var response = await httpService.PutAsJsonAsync($"api/image/{editImageViewModel.Id}", imageUpdaterDto)
+                .ConfigureAwait(false);
+
+            return HandleApiResponse(response, () => RedirectToAction("Index"));
         }
 
         public async Task Logout()

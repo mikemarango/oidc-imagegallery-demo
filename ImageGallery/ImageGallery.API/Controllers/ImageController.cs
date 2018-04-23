@@ -31,7 +31,9 @@ namespace ImageGallery.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetImages()
         {
-            var images = await Repository.GetImagesAsync();
+            var ownerId = User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
+
+            var images = await Repository.GetImagesAsync(ownerId);
 
             var imageDto = Mapper.Map<IEnumerable<ImageDto>>(images);
 
@@ -67,7 +69,7 @@ namespace ImageGallery.API.Controllers
 
             var fileName = $"{Guid.NewGuid().ToString()}.jpg";
 
-            var filePath = Path.Combine($"{webRootPath}/images/{fileName}");
+            var filePath = Path.Combine($"{webRootPath}/image/{fileName}");
 
             await System.IO.File.WriteAllBytesAsync(fileName, imageCreatorDto.Bytes);
 

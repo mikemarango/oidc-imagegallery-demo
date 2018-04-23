@@ -16,9 +16,9 @@ namespace ImageGallery.Api.Services.Repositories
             Context = context;
         }
 
-        public Task<List<Image>> GetImagesAsync()
+        public Task<List<Image>> GetImagesAsync(string ownerId)
         {
-            return Context.Images.ToListAsync();
+            return Context.Images.Where(i => i.OwnerId == ownerId).OrderBy(i => i.Title).ToListAsync();
         }
 
         public Task<Image> GetImageAsync(Guid id)
